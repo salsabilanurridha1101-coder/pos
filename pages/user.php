@@ -1,6 +1,6 @@
 <?php
 include 'config/koneksi.php';
-$query = mysqli_query($koneksi, "SELECT r.name AS role_name, u.* FROM users u LEFT JOIN roles r ON r.id = u.role_id WHERE deleted_at IS NULL ORDER BY u.id ");
+$query = mysqli_query($koneksi, "SELECT r.name AS role_name, u.* FROM users u LEFT JOIN roles r ON r.id = u.role_id WHERE deleted_at IS NULL ORDER BY u.id DESC ");
 $users = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
 //disini parameter delete
@@ -8,7 +8,7 @@ if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
     $delete = mysqli_query($koneksi, "UPDATE users SET deleted_at = NOW() WHERE id = '$id'");
     //redirect
-    header("location: user.php?hapus=sukses");
+    header("location:?page=user&hapus=sukses");
 }
 ?>
 <div class="row">
@@ -39,8 +39,8 @@ if (isset($_GET['delete'])) {
                                 <td><?php echo $value['email'] ?></td>
                                 <td><?php echo $value['role_name'] ?></td>
                                 <td>
-                                    <a class="btn btn-outline-success" href="tambah-user.php?edit=<?php echo $value['id'] ?>"> <i class="bi bi-pencil"></i></a>
-                                    <a class="btn btn-outline-warning" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" href="user.php?delete=<?php echo $value['id'] ?>"><i class="bi bi-trash"></i></a>
+                                    <a class="btn btn-outline-success" href="?page=tambah-user&edit=<?php echo $value['id'] ?>"> <i class="bi bi-pencil"></i></a>
+                                    <a class="btn btn-outline-warning" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" href="?page=user&delete=<?php echo $value['id'] ?>"><i class="bi bi-trash"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach ?>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+ob_start();
 include 'inc/functions.php';
 include 'config/koneksi.php';
 
@@ -66,7 +67,7 @@ include 'config/koneksi.php';
                 echo "<h1>Halaman Tidak ditemukan</h1>";
             }
         } else{
-            include 'pages/dasboard.php';
+            include 'pages/dashboard.php';
         }
         ?>
 

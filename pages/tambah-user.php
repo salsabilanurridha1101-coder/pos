@@ -1,4 +1,5 @@
 <?php
+ob_start();
 $id = isset($_GET['edit']) ? $_GET['edit'] : '';
 $queryEdit = mysqli_query($koneksi, "SELECT * FROM users WHERE id= '$id'");
 $rowEdit = mysqli_fetch_assoc($queryEdit);
@@ -15,7 +16,7 @@ if (isset($_POST['update'])) {
     }
 
     if ($query) {
-        header("location:user.php?ubah=berhasil");
+        header("location:?page=user&ubah=berhasil");
     }
 }
 
@@ -27,7 +28,7 @@ if (isset($_POST['simpan'])) {
     $query = mysqli_query($koneksi, "INSERT INTO users (name , email , password) VALUES ('$name','$email','$password')");
 
     if ($query) {
-        header("location:user.php?tambah=berhasil");
+        header("location:?page=user&tambah=berhasil");
     }
 };
 
@@ -55,10 +56,10 @@ if (isset($_POST['simpan'])) {
                         <input type="password" name="password" class="form-control" placeholder="Enter your password babe">
                     </div><br>
                     <div class="mb-3">
-                        <button class="btn btn-success" type="submit" name="<?php echo ($id) ? 'update' : 'simpan' ?>">
+                        <button class="btn btn-primary" type="submit" name="<?php echo ($id) ? 'update' : 'simpan' ?>">
                             <?php echo ($id) ? 'simpan perubahan' : 'simpan' ?>
                         </button>
-                        <button class="btn btn-warning" style="text-color: white;">
+                        <button class="btn btn-warning">
                             <a href="user.php">Back</a>
                         </button>
                     </div>
