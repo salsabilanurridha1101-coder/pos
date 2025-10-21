@@ -35,14 +35,14 @@ if (isset($_GET['delete'])) {
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Data Product</h3>
+                <div class="card-body" style="background-color: #FFE6D4;"><br>
+                    <h1 class="card-title">Data Product</h1>
                     <div align='right' class="d-flex-justify-content-end p-2">
-                        <a href="?page=tambah-product">Tambah</a>
+                        <a href="?page=tambah-product" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Add Product</a>
                     </div>
-                    <table class="table table-bordered  text-center">
+                    <table class="table table-bordered  text-center" >
                         <tr>
-                            <th>No</th>
+                            <th >No</th>
                             <th>Category Name</th>
                             <th>Product Name</th>
                             <th>Product Photo</th>
@@ -60,7 +60,7 @@ if (isset($_GET['delete'])) {
                                 <td><?php echo $v['product_price'] ?></td>
                                 <td><?php echo $v['product_description'] ?></td>
                                 <td>
-                                    <a href="?page=tambah-product&edit=<?php echo $v['id'] ?>" class="btn btn-outline-success"><i class="bi bi-trash">edit</i></a>
+                                    <a href="?page=tambah-product&edit=<?php echo $v['id'] ?>" class="btn btn-outline-warning"><i class="bi bi-pencil"></i></a>
                                     <a href="?page=product&delete=<?php echo $v['id'] ?>" class="btn btn-outline-danger" onclick="return confirm('really wnna delete??')"><i class="bi bi-trash"></i></a>
                                 </td>
                             </tr>

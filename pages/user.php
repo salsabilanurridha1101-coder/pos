@@ -17,7 +17,7 @@ if (isset($_GET['delete'])) {
             <div class="card-body">
                 <h3 class="card-title">Data User</h3>
                 <div class="mb-3" align="right">
-                    <a href="?page=tambah-user" class="btn btn-outline-info">
+                    <a href="?page=tambah-user" class="btn btn-outline-primary">
                         <i class="bi bi-plus-circle"></i> Add User
                     </a>
                 </div>

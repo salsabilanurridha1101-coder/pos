@@ -60,7 +60,7 @@ if (isset($_POST['simpan'])) {
                             <?php echo ($id) ? 'simpan perubahan' : 'simpan' ?>
                         </button>
                         <button class="btn btn-warning">
-                            <a href="user.php">Back</a>
+                            <a href="?page=user">Back</a>
                         </button>
                     </div>
                 </form>
