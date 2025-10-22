@@ -207,12 +207,18 @@
             }
 
             //array: sebuah tipe data yang bisa memiliki nilai lebih dari satu (1)
-            let buah = ['pisang', 'salak','semangka'];
-                  //      0          1         2
+            let buah = ['pisang', 'salak', 'semangka'];
+            //      0          1         2
             console.log("buah di keranjang:", buah);
             console.log("saya mau buah:", buah[1]);
             buah[1] = "nanas";
             console.log("buah baru:", buah);
+            buah.push('pepaya')
+            console.log("buah", buah);
+            buah.push('jeruk')
+            console.log("buah", buah)
+            buah.pop();
+            console.log("buah", buah)
         </script>
 </body>
 
