@@ -1,3 +1,15 @@
+<?php
+include '../config/koneksi.php';
+
+$queryCat = mysqli_query($koneksi, "SELECT * FROM categories");
+$fetchCats = mysqli_fetch_all($queryCat, MYSQLI_ASSOC);
+
+// query product
+$queryProducts = mysqli_query($koneksi, "SELECT c.category_name,p.* FROM products p LEFT JOIN categories c ON c.id = p.category_id");
+$fetchProducts = mysqli_fetch_all($queryProducts, MYSQLI_ASSOC);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,98 +30,27 @@
 
     <!-- container-fluid -->
     <div class="container-fluid container-pos">
+        <div id="card">
+            <!-- <h3>Nama Product</h3>
+            <p>Description product</p> -->
+        </div>
         <div class="row h-100">
             <div class="col-md-7 product-section">
                 <div class="mb-4">
-                    <br>
-                    <h4 class="mb-3">
+                    <h4 class="mb-3" id="product-title">
                         <i class="fas fas-store"></i>product
                     </h4>
                     <input type="text" id="searchProduct" class="form-control search-box" placeholder="find the product..">
                 </div>
                 <div class="mb-4">
-                    <button class="btn btn-warning category-btn active">All Menu</button>
-                    <button class="btn btn-outline-warning category-btn ">Food</button>
-                    <button class="btn btn-outline-warning category-btn ">Food</button>
-                    <button class="btn btn-outline-warning category-btn ">Drink</button>
-                    <button class="btn btn-outline-warning category-btn ">Snack</button>
+                    <button class="btn btn-warning category-btn active" onclick="filterCategory('all', this)">All Menu</button>
+                    <?php foreach ($fetchCats as $cat): ?>
+                        <button class="btn btn-outline-warning category-btn " onclick="filterCategory('<?php echo $cat['category_name'] ?>', this)"><?php echo $cat['category_name'] ?></button>
+                    <?php endforeach ?>
+                    <!-- <button class="btn btn-outline-warning category-btn ">Drink</button>
+                    <button class="btn btn-outline-warning category-btn ">Snack</button> -->
                 </div>
-                <div class="row" id="productGrid">
-                    <div class="col-md-4 col-sm-6">
-                        <div class="card product-card">
-                            <div class="product-img">
-                                <img src="../assets/uploads/tori kara.jpg" alt="" width="100%">
-                            </div>
-                            <div class="card-body">
-                                <span class="badge bg-secondary badge-category">Food</span>
-                                <h6 class="card-title mt-2 mb-2">Mie Tori Miso</h6>
-                                <p class="card-text text-primary fw-bold">Rp. 20.000</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="card product-card">
-                            <div class="product-img">
-                                <img src="../assets/uploads/miso.jpeg" alt="" width="100%">
-                            </div>
-                            <div class="card-body">
-                                <span class="badge bg-secondary badge-category">Food</span>
-                                <h6 class="card-title mt-2 mb-2">Mie Miso</h6>
-                                <p class="card-text text-primary fw-bold">Rp. 20.000</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="card product-card">
-                            <div class="product-img">
-                                <img src="../assets/uploads/ramyeon.jpg" alt="" width="100%">
-                            </div>
-                            <div class="card-body">
-                                <span class="badge bg-secondary badge-category">Food</span>
-                                <h6 class="card-title mt-2 mb-2">Mie Ramyeon</h6>
-                                <p class="card-text text-primary fw-bold">Rp. 20.000</p>
-                            </div>
-                        </div>
-                    </div>
-                </div><br>
-                <div class="row" id="productGrid">
-                    <div class="col-md-4 col-sm-6">
-                        <div class="card product-card">
-                            <div class="product-img">
-                                <img src="../assets/uploads/straw.jpeg" alt="" width="100%">
-                            </div>
-                            <div class="card-body">
-                                <span class="badge bg-secondary badge-category">Drink</span>
-                                <h6 class="card-title mt-2 mb-2">Jus Strawbery</h6>
-                                <p class="card-text text-primary fw-bold">Rp. 22.000</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="card product-card">
-                            <div class="product-img">
-                                <img src="../assets/uploads/jus.jpg" alt="" width="100%">
-                            </div>
-                            <div class="card-body">
-                                <span class="badge bg-secondary badge-category">Drink</span>
-                                <h6 class="card-title mt-2 mb-2">Jus Mangga</h6>
-                                <p class="card-text text-primary fw-bold">Rp. 15.000</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="card product-card">
-                            <div class="product-img">
-                                <img src="../assets/uploads/alpukat.jpeg" alt="" width="100%">
-                            </div>
-                            <div class="card-body">
-                                <span class="badge bg-secondary badge-category">Drink</span>
-                                <h6 class="card-title mt-2 mb-2">Jus Alpukat</h6>
-                                <p class="card-text text-primary fw-bold">Rp. 25.000</p>
-                            </div>
-                        </div>
-                    </div>
-                </div><br><br>
+                <div class="row" id="productGrid"></div>
 
             </div>
             <div class="col-md-5 cart-section">
@@ -155,71 +96,16 @@
                 </div>
             </div>
         </div>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
             crossorigin="anonymous">
         </script>
-
         <script>
-            let nama = 'nur ridha salsabila';
-            var name = "hei jangan lanjyut!";
-            const fullname = "nur ridha salsabila";
-            // const : tetap tidak boleh merubah nilai 
-            // document.write ()
-            // console.log({"nama": name, "fullname": fullname});
-            // alert(name);
-
-            let angka1 = 10;
-            let angka2 = 20;
-            console.log(angka1 + angka2)
-            console.log(angka1 - angka2)
-            console.log(angka1 / angka2)
-            console.log(angka1 * angka2)
-            console.log(angka1 % angka2)
-            console.log(angka1 ** angka2)
-
-            //operator penugasan
-            let x = 10;
-            x += 5; //15
-            console.log(x);
-
-            //operator pembandingan 
-            // >,<,=, ==,===,!==
-            let a = 1;
-            let b = 1;
-            if (a === b) {
-                console.log("ya")
-            } else {
-                console.log(tidak)
-            }
-
-            console.log(a > b)
-            console.log(a < b)
-
-            //operator logika 
-            //&&, AND, OR, ||, !: tidak/not
-            let umur = 20;
-            let punyaSim = true;
-            if (umur >= 17 && punyaSim) {
-                console.log("boleh mengemudi");
-            } else {
-                console.log("tidak boleh mengemudi")
-            }
-
-            //array: sebuah tipe data yang bisa memiliki nilai lebih dari satu (1)
-            let buah = ['pisang', 'salak', 'semangka'];
-            //      0          1         2
-            console.log("buah di keranjang:", buah);
-            console.log("saya mau buah:", buah[1]);
-            buah[1] = "nanas";
-            console.log("buah baru:", buah);
-            buah.push('pepaya')
-            console.log("buah", buah);
-            buah.push('jeruk')
-            console.log("buah", buah)
-            buah.pop();
-            console.log("buah", buah)
+            const products = <?php echo json_encode($fetchProducts); ?>
         </script>
+
+        <script src="../assets/js/salsa.js"></script>
 </body>
 
 </html>
